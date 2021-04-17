@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>SchoolName Students</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- EXTERNAL CSS STYLESHEETS -->
+    <!--
+        External stylesheet by Nicolas Gallagher to revert styles to a "default" for many major browsers
+        Accessed: 20:50 23-Nov-2020
+        github URL: https://necolas.github.io/normalize.css/
+    -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- My external stylesheet -->
+    <link rel="stylesheet" href="css/main.css">
+    <!--                          -->
+
+  </head>
+  <body>
+    <header>
+      <h1>SchoolName Information Database</h1>
+      <nav>
+        <ul>
+          <li><a href="#" id="toggle-mode">Library</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h2 id="current-database">Student Database</h2>
+      <div id="set-filter">
+        <label for="filter-names">Filter Database</label>
+        <input type="text" name="search-names" placeholder="Filter by Name (Not case sensitive)" id="filter-names">
+        <button id="filter-names-button">Filter Results</button>
+      </div>
+      <!-- Table and h2 regions left empty for JS-->
+      <table id="info-table">
+        <thead>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <h2 id="no-results-target"></h2>
+      <!--                                       -->
+      <p><a href="#">Back to top</a></p>
+    </main>
+
+    <footer>
+      <p>&copy; Copyright SchoolName 2020</p>
+      <address>
+        <div id="virtual-address">
+          <p>Contact us:<br>Phone: 902-000-1234<br>Email: schoolname@schools.com</p>
+        </div>
+        <div id="physical-address">
+          <p>Our Address:<br>80 Roadname Dr, Halifax, NS, Canada</p>
+        </div>
+      </address>
+    </footer>
+    <!-- SCRIPTS -->
+    <!--
+      data-school and data-library script below provided by Raghav Sampangi with assignment instructions
+    -->
+    <script src="js/data-school.js"></script>
+    <script src="js/data-library.js"></script>
+    <!-- My script -->
+    <script src="js/scipts.js"></script>
+    <!--         -->
+  </body>
+</html>
