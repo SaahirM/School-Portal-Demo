@@ -5,7 +5,7 @@
 
 ## Desc
 
-A made-up website displaying synthesized data in a table. The table can be filtered by name too (Client-side search)
+A made-up website displaying synthesized data in a table. The table can be filtered by name too (Client-side search). Currently working to hide parts of the table when switching to mobile (to improve readability), and support clicking/tapping on the entries to access all information
 
 ## Citations
 

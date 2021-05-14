@@ -73,7 +73,7 @@ div#set-filter > button:active {
 /* Table styles*/
 table#info-table {
   border: 1px solid brown;
-  max-width: 100%;
+  width: 100%;
   /* Reduce font-size for mobile
   Citation: visited uxmatters.com for information about adapting a table for mobile view
   Article author: Steven Hoober
@@ -81,18 +81,32 @@ table#info-table {
   Visited: 16:20 ADT 04-Dec-2020
   URL: https://www.uxmatters.com/mt/archives/2020/07/designing-mobile-tables.php
   */
-  font-size: small;
+  font-size: large;
   font-weight: bold;
+  text-align: center;
 }
 table#info-table > thead {
   background-color: orange;
   color: maroon;
+}
+/* Don't display excessive table collumns on mobile*/
+table#info-table > thead > tr > td:nth-of-type(n + 3) {
+  display: none;
+}
+table#info-table > tbody > tr > td:nth-of-type(n + 3) {
+  display: none;
 }
 table#info-table > tbody > tr:nth-of-type(2n) {
   background-color: lightyellow;
 }
 table#info-table > tbody > tr:nth-of-type(2n + 1) {
   background-color: wheat;
+}
+table#info-table > tbody > tr:hover {
+  opacity: 75%;
+}
+table#info-table > tbody > tr:active {
+  opacity: 65%;
 }
 h2#no-results-target {
   /* Style text displayed when filtering returns no results*/
@@ -147,10 +161,23 @@ footer > address > div#physical-address {
   main {
     margin: 0 15%;
   }
+
+  /* Revert mobile table-adaptations*/
   table#info-table {
-    /* Revert mobile table-adaptations*/
     font-size: medium;
     font-weight: normal;
+  }
+  table#info-table > thead > tr > td:nth-of-type(n + 3) {
+    display: table-cell;
+  }
+  table#info-table > tbody > tr > td:nth-of-type(n + 3) {
+    display: table-cell;
+  }
+  table#info-table > tbody > tr:hover {
+    opacity: inherit;
+  }
+  table#info-table > tbody > tr:active {
+    opacity: inherit;
   }
 
   footer {
@@ -166,5 +193,5 @@ footer > address > div#physical-address {
     grid-column: 2;
     grid-row: 1;
   }
-  
+
 }

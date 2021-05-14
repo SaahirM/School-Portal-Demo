@@ -1,8 +1,9 @@
 /**
  * File: scripts.js
  * Author: Saahir Monowar
- * Desc: Script for School-Portal-Dummy index.html. Saves dummy school and library data, 
- * 		 and displays it onto a table. Also supports table-filtering by name
+ * Desc: Script for School-Portal-Dummy index.html. Saves dummy school and library data,
+ * 		 and displays it onto a table. Also supports table-filtering by name.
+ *     Soon to support responsiveness when switching to reduced/increased screen width
  */
 
 
@@ -20,6 +21,21 @@ let tableHeadTarget = document.querySelector("thead");
 let failureTarget = document.getElementById("no-results-target");
 filterButton.addEventListener("click", filter);
 toggleModeButton.addEventListener("click", toggleMode);
+
+// Handle window resizing with events (Display table differently if on mobile)
+let width = window.innerWidth;
+let pageView = isMobile();
+addEventListener("resize", function() {
+  width = window.innerWidth;
+  if (pageView != isMobile()) {
+    displayTable();
+    pageView = isMobile();
+  }
+});
+
+function isMobile() {
+  return width < 840;
+}
 
 /**
  * Method filter(event):
@@ -54,8 +70,19 @@ function search(jsonData, propertyName, word) {
 }
 
 /**
+ * // TODO: expand() method creates a popup on screen to display all
+ *          information in entry
+ */
+function expand(entry) {
+  console.log("an entry was clicked");
+  console.log(entry);
+}
+
+/**
  * Method displayTableBody(objectArray):
- * Displays information passed to function into a table inserted into the HTML
+ * Displays information passed to function into a table inserted into the HTML.
+ * If on mobile, also add event listeners to table rows to allow "expansion"
+ * (Css hides all collumns except first two on mobile)
  * Returns: void
  */
 function displayTableBody(objectArray) {
@@ -66,15 +93,32 @@ function displayTableBody(objectArray) {
   } else {
     //Otherwise, if atleast one name match was found
     let displayedResults = "";
+    let properties = Object.keys(objectArray[0]);
     for (var i = 0; i < objectArray.length; i++) {
       let tableData = "<tr>";
-      for (var objectDetails in objectArray[i]) {
+      for (let j = 0; j < properties.length; j++) {
+        let objectDetails = properties[j];
         tableData += `<td>${objectArray[i][objectDetails]}</td>`;
       }
       displayedResults += `${tableData}</tr>`;
     }
     failureTarget.innerHTML = '<h2 id="no-results-target"></h2>';
     tableTarget.innerHTML = displayedResults;
+
+    // Turn table entries into buttons on mobile
+    if (isMobile()) {
+      // for (let entry of tableTarget.children) {
+      //   entry.addEventListener("click", function() {
+      //     expand(entry); //pass entry to expand() function
+      //   });
+      // }
+      for (let i = 0; i < objectArray.length; i++) {
+        let htmlRow = tableTarget.children[i];
+        htmlRow.addEventListener("click", function() {
+          expand(objectArray[i]); //pass entry to expand() function
+        });
+      }
+    }
   }
 }
 
@@ -95,6 +139,14 @@ function displayTableHead(objectArray) {
 }
 
 /**
+ * Wrapper function to display Table
+ */
+function displayTable(pagaData) {
+  displayTableHead(pageData);
+  displayTableBody(pageData);
+}
+
+/**
  * Method toggleMode(event):
  * Toggles page between displaying student information or librarby information
  * Returns: void
@@ -107,19 +159,16 @@ function toggleMode(event) {
     currentDatabase.innerHTML = "Library Database";
     toggleModeButton.innerHTML = "Students";
     input.value = "";
-    displayTableHead(libraryData);
-    displayTableBody(libraryData);
+    displayTable(libraryData)
   } else {
     pageMode = "StudentName";
     pageData = studentData;
     currentDatabase.innerHTML = "Student Database";
     toggleModeButton.innerHTML = "Library";
     input.value = "";
-    displayTableHead(studentData);
-    displayTableBody(studentData);
+    displayTable(studentData);
   }
 }
 
 //Generate full table when page loads/scripts link
-displayTableHead(studentData);
-displayTableBody(studentData);
+displayTable(studentData);
