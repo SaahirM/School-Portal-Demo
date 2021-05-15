@@ -1,0 +1,170 @@
+/* Mobile View (Default)*/
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: auto;
+}
+
+/* Page Header Styles*/
+header {
+  padding-top: 5px;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+nav > ul {
+  padding-left: 0px;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+header li {
+  /* Remove List bullet points*/
+  list-style-type: none;
+  background-color: steelblue;
+}
+nav > ul > li > a {
+  /* Navigation links styles*/
+  color: yellow;
+  text-decoration: none;
+  font-size: large;
+}
+nav > ul > li > a:hover {
+  color: lightgrey;
+}
+
+/* Main portion of Page Styles*/
+main {
+  padding: 5px;
+}
+/* Filter above table styles*/
+section#set-filter {
+  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: auto auto;
+}
+section#set-filter > label {
+  grid-column: 1/-1;
+  grid-row: 1;
+  padding-bottom: 5px;
+}
+section#set-filter > input{
+  grid-column: 1/-2;
+  grid-row: 2;
+  border: 1px solid blue;
+}
+section#set-filter > input:focus {
+  background-color: lightcyan;
+}
+section#set-filter > button {
+  grid-column: -2;
+  grid-row: 2;
+  border: 4px outset skyblue;
+  background-color: blue;
+  color: white;
+}
+section#set-filter > button:hover {
+  border-color: lightgreen;
+  background-color: green;
+}
+section#set-filter > button:active {
+  background-color: darkgreen;
+}
+/* Table styles*/
+table#info-table {
+  border: 1px solid brown;
+  max-width: 100%;
+  /* Reduce font-size for mobile
+  Citation: visited uxmatters.com for information about adapting a table for mobile view
+  Article author: Steven Hoober
+  Article: Designing Mobile Tables 06-Jul-2020
+  Visited: 16:20 ADT 04-Dec-2020
+  URL: https://www.uxmatters.com/mt/archives/2020/07/designing-mobile-tables.php
+  */
+  font-size: small;
+  font-weight: bold;
+}
+table#info-table > thead {
+  background-color: orange;
+  color: maroon;
+}
+table#info-table > tbody > tr:nth-of-type(2n) {
+  background-color: lightyellow;
+}
+table#info-table > tbody > tr:nth-of-type(2n + 1) {
+  background-color: wheat;
+}
+h2#no-results-target {
+  /* Style text displayed when filtering returns no results*/
+  color: red;
+}
+
+/* Page Footer Styles*/
+footer {
+  background-color: black;
+  color: white;
+  display: grid;
+  grid-template-rows: auto auto;
+}
+footer > p {
+  grid-row: 1;
+}
+footer > address {
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+footer > address > div#virtual-address {
+  grid-column: 1;
+}
+footer > address > div#physical-address {
+  grid-column: 2;
+}
+
+/* Desktop View*/
+
+@media screen and (min-width: 840px) {
+
+  header, main, footer {
+    padding: 0 10px;
+  }
+
+  header {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header li {
+    background-color: black;
+  }
+  nav > ul > li > a {
+    /* Manually space link items. May need to alter if more than two links*/
+    padding: 0 5px;
+    color: white;
+  }
+
+  main {
+    margin: 0 15%;
+  }
+  table#info-table {
+    /* Revert mobile table-adaptations*/
+    font-size: medium;
+    font-weight: normal;
+  }
+
+  footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  footer > p {
+    grid-column: 1;
+    align-self: center;
+  }
+  footer > address {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+}

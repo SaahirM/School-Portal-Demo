@@ -37,44 +37,53 @@ main {
   padding: 5px;
 }
 /* Filter above table styles*/
-div#set-filter {
+section#set-filter {
   padding-bottom: 10px;
   display: grid;
   grid-template-columns: 3fr 1fr;
   grid-template-rows: auto auto;
 }
-div#set-filter > label {
+section#set-filter > label {
   grid-column: 1/-1;
   grid-row: 1;
   padding-bottom: 5px;
 }
-div#set-filter > input{
+section#set-filter > input{
   grid-column: 1/-2;
   grid-row: 2;
   border: 1px solid blue;
 }
-div#set-filter > input:focus {
-  background-color: skyblue;
+section#set-filter > input:focus {
+  background-color: lightcyan;
 }
-div#set-filter > button {
+section#set-filter > button {
   grid-column: -2;
   grid-row: 2;
-  border: 4px outset lightblue;
+  border: 4px outset skyblue;
   background-color: blue;
   color: white;
 }
-div#set-filter > button:hover {
+section#set-filter > button:hover {
   border-color: lightgreen;
   background-color: green;
 }
-div#set-filter > button:active {
+section#set-filter > button:active {
   background-color: darkgreen;
 }
+
+p#mobile-notif {
+  color: red;
+}
+p#mobile-notif > a {
+  color: darkred;
+}
+
 /* Table styles*/
 table#info-table {
   border: 1px solid brown;
   width: 100%;
-  /* Reduce font-size for mobile
+  text-align: center;
+  /* Adapt table to mobile
   Citation: visited uxmatters.com for information about adapting a table for mobile view
   Article author: Steven Hoober
   Article: Designing Mobile Tables 06-Jul-2020
@@ -83,17 +92,13 @@ table#info-table {
   */
   font-size: large;
   font-weight: bold;
-  text-align: center;
 }
 table#info-table > thead {
   background-color: orange;
   color: maroon;
 }
-/* Don't display excessive table collumns on mobile*/
-table#info-table > thead > tr > td:nth-of-type(n + 3) {
-  display: none;
-}
-table#info-table > tbody > tr > td:nth-of-type(n + 3) {
+table#info-table tr > td:nth-of-type(n + 3) {
+  /* Don't display excessive table collumns on mobile*/
   display: none;
 }
 table#info-table > tbody > tr:nth-of-type(2n) {
@@ -113,6 +118,45 @@ h2#no-results-target {
   color: red;
 }
 
+/* Entry 'Expansion' styles*/
+div#blur-background {
+  background-color: grey;
+  opacity: 50%;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+div#entry-expansion {
+  background-color: moccasin;
+  position: fixed;
+  width: 75vw;
+  height: 90vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 4vh auto;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+  z-index: +1;
+  display: grid;
+  font-size: larger;
+}
+div#entry-expansion > p {
+  --border-col: firebrick;
+  color: saddlebrown;
+  border-top: 1px solid var(--border-col);
+  border-bottom: 1px solid var(--border-col);
+  /* vertically-center text manually*/
+  margin: 0;
+  padding-top: 30px;
+}
+
 /* Page Footer Styles*/
 footer {
   background-color: black;
@@ -128,16 +172,16 @@ footer > address {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-footer > address > div#virtual-address {
+footer > address > section#virtual-address {
   grid-column: 1;
 }
-footer > address > div#physical-address {
+footer > address > section#physical-address {
   grid-column: 2;
 }
 
-/* Desktop View*/
+/* Tablet/mostly-Desktop View*/
 
-@media screen and (min-width: 840px) {
+@media screen and (min-width: 930px) {
 
   header, main, footer {
     padding: 0 10px;
@@ -158,26 +202,23 @@ footer > address > div#physical-address {
     color: white;
   }
 
-  main {
-    margin: 0 15%;
+  p#mobile-notif {
+    display: none;
   }
 
   /* Revert mobile table-adaptations*/
   table#info-table {
-    font-size: medium;
-    font-weight: normal;
+    font-size: revert;
+    font-weight: revert;
   }
-  table#info-table > thead > tr > td:nth-of-type(n + 3) {
-    display: table-cell;
-  }
-  table#info-table > tbody > tr > td:nth-of-type(n + 3) {
-    display: table-cell;
+  table#info-table tr > td:nth-of-type(n + 3) {
+    display: revert;
   }
   table#info-table > tbody > tr:hover {
-    opacity: inherit;
+    opacity: revert;
   }
   table#info-table > tbody > tr:active {
-    opacity: inherit;
+    opacity: revert;
   }
 
   footer {
@@ -192,6 +233,16 @@ footer > address > div#physical-address {
   footer > address {
     grid-column: 2;
     grid-row: 1;
+  }
+
+}
+
+/* Desktop View*/
+
+@media screen and (min-width: 1050px) {
+
+  main {
+    margin: 0 15%;
   }
 
 }

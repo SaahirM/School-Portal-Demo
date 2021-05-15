@@ -2,8 +2,9 @@
  * File: scripts.js
  * Author: Saahir Monowar
  * Desc: Script for School-Portal-Dummy index.html. Saves dummy school and library data,
- * 		 and displays it onto a table. Also supports table-filtering by name.
- *     Soon to support responsiveness when switching to reduced/increased screen width
+ * 	  	 and displays it onto a table. Also supports table-filtering by name.
+ *       Additionally, allows clicking table entries on mobile for more details about
+ *       that entry
  */
 
 
@@ -13,6 +14,7 @@ let libraryData = JSON.parse(jsonDataLibrary);
 let pageMode = "StudentName"; //Default page view (Shows student information by default)
 let pageData = studentData;
 
+let main = document.querySelector("main");
 let input = document.getElementById("filter-names");
 let filterButton = document.getElementById("filter-names-button");
 let toggleModeButton = document.getElementById("toggle-mode");
@@ -22,19 +24,27 @@ let failureTarget = document.getElementById("no-results-target");
 filterButton.addEventListener("click", filter);
 toggleModeButton.addEventListener("click", toggleMode);
 
+let MOBILE_MAX_WIDTH = 930;
+let mobileNotif = document.createElement("p");
+mobileNotif.innerHTML = "*Note: Due to reduced screen width, the table has been simplified. Tap/click on an entry below to expand it for more information. Or click <a href='./old-webpage/old-index.html'>here</a> for the entire table (which may not fit on screen)"
+mobileNotif.setAttribute("id", "mobile-notif");
+
+let blurBackground = document.createElement("div");
+blurBackground.setAttribute("id", "blur-background");
+let entryExpansion = document.createElement("div");
+entryExpansion.setAttribute("id", "entry-expansion");
+
 // Handle window resizing with events (Display table differently if on mobile)
-let width = window.innerWidth;
 let pageView = isMobile();
 addEventListener("resize", function() {
-  width = window.innerWidth;
   if (pageView != isMobile()) {
-    displayTable();
     pageView = isMobile();
+    displayTable();
   }
 });
 
 function isMobile() {
-  return width < 840;
+  return window.innerWidth < MOBILE_MAX_WIDTH;
 }
 
 /**
@@ -70,12 +80,29 @@ function search(jsonData, propertyName, word) {
 }
 
 /**
- * // TODO: expand() method creates a popup on screen to display all
- *          information in entry
+ * Creates a popup on screen to display information in given entry.
+ * Also creates event listener for clicks on blurred background
+ * (to unexpand)
  */
 function expand(entry) {
-  console.log("an entry was clicked");
-  console.log(entry);
+  main.insertBefore(blurBackground, mobileNotif);
+  blurBackground.addEventListener("click", unexpand);
+  main.insertBefore(entryExpansion, blurBackground);
+
+  let properties = Object.keys(entry);
+  for (let property of properties) {
+    entryExpansion.innerHTML += `<p><strong>${property}:</strong> ${entry[property]}</p>`;
+  }
+}
+
+/**
+ * Reverses expansion changes (see expand())
+ */
+function unexpand() {
+  main.removeChild(blurBackground);
+  main.removeChild(entryExpansion);
+  entryExpansion.innerHTML = "";
+  blurBackground.removeEventListener("click", unexpand);
 }
 
 /**
@@ -107,11 +134,6 @@ function displayTableBody(objectArray) {
 
     // Turn table entries into buttons on mobile
     if (isMobile()) {
-      // for (let entry of tableTarget.children) {
-      //   entry.addEventListener("click", function() {
-      //     expand(entry); //pass entry to expand() function
-      //   });
-      // }
       for (let i = 0; i < objectArray.length; i++) {
         let htmlRow = tableTarget.children[i];
         htmlRow.addEventListener("click", function() {
@@ -144,6 +166,16 @@ function displayTableHead(objectArray) {
 function displayTable(pagaData) {
   displayTableHead(pageData);
   displayTableBody(pageData);
+  if (isMobile()) {
+    main.insertBefore(mobileNotif, document.getElementById("info-table"));
+  } else {
+    if (document.querySelector("#mobile-notif")) {
+      main.removeChild(mobileNotif);
+    }
+    if (document.querySelector("#blur-background")) {
+      unexpand();
+    }
+  }
 }
 
 /**
